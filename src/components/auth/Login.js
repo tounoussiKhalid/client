@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+import 'materialize-css/dist/css/materialize.min.css'
+
 class Login extends Component {
   constructor() {
     super();
@@ -36,7 +38,8 @@ onSubmit = e => {
     e.preventDefault();
 const userData = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      espace : this.props.match.params.espace
     };
 this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
@@ -52,11 +55,11 @@ return (
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
-                <b>Login</b> below
+                <b>Login</b>
               </h4>
-              {/*<p className="grey-text text-darken-1">
+              <p className="grey-text text-darken-1">
                 Don't have an account? <Link to="/register">Register</Link>
-              </p>*/}
+              </p>
             </div>
             <form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">

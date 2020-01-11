@@ -23,6 +23,7 @@ export default function SimpleSelect( props) {
     setAge(event.target.value);
   };
 
+  
 
   let ItemsList = [];
   let cmp = 0;
@@ -41,8 +42,9 @@ export default function SimpleSelect( props) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
+          name = {props.title}
           value={module}
-          onChange={handleChange}
+          onChange={(e) => { handleChange(e);  props.handleSelect(e);  } }
         >
 
           {ItemsList}

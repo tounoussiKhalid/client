@@ -10,6 +10,7 @@ class Dashboard extends Component {
   };
 render() {
     const { user } = this.props.auth;
+    console.log( "*************" ,user ,"*************" );
 return (
       <div style={{ height: "75vh" }} className="mainContainer valign-wrapper">
         <div  style={{  width : "95%", margin : "auto"}}>
@@ -27,7 +28,8 @@ return (
               Logout
             </button>
             
-          <StudentList />
+          {user.role === 'professor' ? <StudentList id_user={user.id} /> : <div > </div>  } 
+          
             {/*
             <button
               style={{
