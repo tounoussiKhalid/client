@@ -44,6 +44,7 @@ class App extends Component {
             <Route exact path="/login/:espace" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard/absence" component={Dashboard} />
             </Switch>
           </div> 
         </Router>

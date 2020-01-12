@@ -4,11 +4,10 @@ import Switch from '@material-ui/core/Switch';
 class MySwitch extends React.Component{
    constructor(props){
        super(props);
+       console.log( "-------------->->->-->->->->--",this.props.checked )
        this.state = {
-            isCheked : false
+            isCheked : this.props.checked 
         }
-
-        console.log( "** ",this.props.id_student)
    }
   
      handleChange =  event => {
@@ -20,8 +19,7 @@ class MySwitch extends React.Component{
         return(
             <div className="switch">
                 <label>
-                
-                <input onChange={(e)=>{ this.props.handleSwitcheChanges(e);  }} type="checkbox" value={this.props.id_student}/>
+                <input onChange={(e)=>{ this.handleChange(e); this.props.handleSwitcheChanges(e);  }} checked={this.state.isCheked} type="checkbox" value={this.props.id_student}/>
                 <span className="lever"></span>
                 
                 </label>

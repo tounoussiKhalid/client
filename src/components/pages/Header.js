@@ -11,6 +11,7 @@ class Header extends React.Component{
             Module : '',
             Hour  : ''
         }
+        this.id_page = this.props.id_page;
         this.classes = new Object(); 
         this.className = '';   
         console.log("Header Constructor" , this.props.classes_modules )    
@@ -22,46 +23,80 @@ class Header extends React.Component{
       }
 
       getStudentList = async (classe)=>{
-           await fetch( `http://localhost:5000/api/students/${this.className}`)
+           await fetch( `http://localhost:5000/api/students/${classe}`)
            .then( res => res.json() )
            .then ( res => {
+               console.log( "RESULT ",res );
             this.props.handleHeaderChange( res )
            })
       }
+
+      getAbsentStudentList = async ()=>{
+          console.log( this.state.Classe , " *-*-* ", this.state.Module)
+        await fetch( `http://localhost:5000/api/absences/list` , {
+            headers: {'Content-Type':'application/json'},
+            method: 'post',
+            body: JSON.stringify({ 
+              class : this.state.Classe,
+              module : this.state.Module
+            })
+        }) 
+        .then( res => res.json() )
+        .then ( res => {
+            console.log( "RESULT ",res );
+         this.props.handleHeaderChange( res )
+        })
+   }
 
       
       handleChange = (e)=>{
           let val = e.target.value;
           let name = e.target.name;
+         this.props. handleSelectHeaderChange(e);
           console.log( "CHANGE ::",e.target.name,"::",e.target.value )
           this.setState({
               [name] : val
           },  (prevState,props)=>{
+                    
                     if ( this.state.Classe !== '' && this.state.Module !== '' )
                     {
-
-                        this.className = Object.keys(this.classes)[this.state.Classe-1];
-                        this.getStudentList( this.className  );
-                        
-                        console.log( "77-",Object.keys(this.classes)[this.state.Classe-1],"77-")
+                            this.getStudentList( this.state.Classe) 
+            
+                        console.log( "77", this.state.Classe.trim() ,"77-")
                     }
          }
          )
-/*
-          if ( (this.state.Classe !== '' || name=== 'Classe' )&& this.state.Module !== '' || name=== 'Module'){
-               (this.state.Classe !== '' || name=== 'Classe' ) 
-                console.log( "77-",Object.keys(this.classes)[0],"77-")
-                this.getStudentList();
-          }*/
 
-          console.log (this.state)
+
       }
+
+      handleAbsenceChange = (e)=>{
+          console.log( "l3adaaaaaaaaaaaaaaaaaaaaaaaab");
+        let val = e.target.value;
+        let name = e.target.name;
+        console.log( val ,"<<->>", name)
+       this.props. handleSelectHeaderChange(e);
+        console.log( "CHANGE ::",e.target.name,"::",e.target.value )
+        this.setState({
+            [name] : val
+        },  (prevState,props)=>{
+            console.log ( "Header",this.state);
+                  if (this.state.Classe !== '' && this.state.Module !== ''  )
+                  {
+                      console.log( "*/*",this.state.Classe,this.state.Module)
+                          this.getAbsentStudentList()           
+                  }
+       }
+       )
+
+
+        console.log (this.state)
+    }
 
     render (){ 
         let classes_modules = this.state.classes_modules;
         
         classes_modules.map( ( classe_modules) => {
-             console.log(" (-) ",classe_modules )
                 this.classes[classe_modules.class_name] = classe_modules.modules;
         })  
         let modules = [];
@@ -72,10 +107,10 @@ class Header extends React.Component{
         console.log ( modules );
 
         return (
+           this.id_page == 0 ?
             <div>
                 <Container>
                     <Row>
-
                         <Col >
                              <div className="Line" >
                              <div className="oneLine up">classe</div> 
@@ -89,7 +124,21 @@ class Header extends React.Component{
                     </Row>
                 </Container>
             </div>
-
+            :
+            <div>
+                <Container>
+                    <Row>
+                        <Col >
+                             <div className="Line" >
+                             <div className="oneLine up">classe</div> 
+                             <div className="oneLine"><MySelect handleSelect={(e)=>{this.handleAbsenceChange(e);}} title="Classe" content={Object.keys(this.classes)} /></div> 
+                             <div className="oneLine up">Module</div>
+                             <div className="oneLine"><MySelect title="Module" handleSelect= {(e)=>{this.handleAbsenceChange(e);}} content={modules} /></div>   
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         );
     }
 }

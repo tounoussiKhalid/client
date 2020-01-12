@@ -48,4 +48,17 @@ html,body{
     .up + div{
         margin-right: 80px;
     }
+nav {
+  background-color: blue;
+}
 
+nav ul {
+  background-color: yellow;
+}   
+
+ul li{
+  height: 100%;
+}
+li:hover{
+  height: 100%;
+}

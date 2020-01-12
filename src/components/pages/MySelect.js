@@ -21,6 +21,7 @@ export default function SimpleSelect( props) {
 
   const handleChange = event => {
     setAge(event.target.value);
+    console.log( "-----",event.target.value,"-----" )
   };
 
   
@@ -30,7 +31,7 @@ export default function SimpleSelect( props) {
  
     ItemsList = props.content.map( (obj) => {
       ++cmp;
-      return <MenuItem key={cmp} value={cmp}> {obj}</MenuItem>
+      return <MenuItem key={cmp} value={obj}> {obj}</MenuItem>
     }) 
  
 
