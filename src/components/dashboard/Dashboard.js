@@ -6,6 +6,7 @@ import ProfessorHome from './prof/ProfessorHome';
 import AdminHome from './admin/AdminHome';
 import StudentHome from './student/StudentHome';
 import * as ReactBootstrap from 'react-bootstrap'
+import DashboardAdmin from "./DashboardAdmin";
 
 class Dashboard extends Component {
   constructor(props){
@@ -22,6 +23,9 @@ class Dashboard extends Component {
 render() {
     const { user } = this.props.auth;
     console.log( "*************" ,user ,"*************" );
+    if(user.role === 'admin')
+    this.props.history.push("/dashboardAdmin");
+
 return (
   <div>
     <ReactBootstrap.Navbar bg="dark" variant="dark" expand="lg">
@@ -47,7 +51,6 @@ return (
             
           {user.role === 'professor' && <ProfessorHome page={this.state.page} id_user={user.id} /> } 
           {user.role === 'student' && <StudentHome id_user={user.id} /> } 
-          {user.role === 'admin' && <AdminHome id_user={user.id} /> } 
           </div>
         </div>
       </div>

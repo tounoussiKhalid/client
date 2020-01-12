@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { user,setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 import Navbar from "./components/layout/Navbar";
@@ -11,6 +11,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
+import DashboardAdmin from "./components/dashboard/DashboardAdmin";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
@@ -44,7 +45,7 @@ class App extends Component {
             <Route exact path="/login/:espace" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path="/dashboard/absence" component={Dashboard} />
+              <PrivateRoute exact path="/dashboardAdmin" component={DashboardAdmin} />
             </Switch>
           </div> 
         </Router>
